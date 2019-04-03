@@ -21,11 +21,13 @@ function GameObject(attrs){
   this.dimensions = attrs.dimensions;
 }
 
-GameObject.prototype.destroy = function destroy(){
+GameObject.prototype.destroy = function(){
   return `${this.name} was removed from the game.`
 };
 
-GameObject.prototype.takeDamage = function takeDamage(){
+CharacterStats.prototype = Object.create(GameObject.prototype)
+
+CharacterStats.prototype.takeDamage = function(){
   return `${this.name} took damage`
 };
 
@@ -37,7 +39,8 @@ GameObject.prototype.takeDamage = function takeDamage(){
 */
 
 function CharacterStats(attrs) {
-  this.healthpoints = attrs.healthpoints;
+  GameObject.call(this, attrs)
+  this.healthPoints = attrs.healthPoints;
 }
 
 /*
@@ -49,7 +52,20 @@ function CharacterStats(attrs) {
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
- 
+
+Humanoid.prototype = Object.create(CharacterStats.prototype)
+
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language}.`
+}
+
+ function Humanoid(attrs) {
+   CharacterStats.call(this, attrs)
+   this.team = attrs.team;
+   this.weapons = attrs.weapons;
+   this.language = attrs.language;
+ }
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -58,7 +74,7 @@ function CharacterStats(attrs) {
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -119,9 +135,10 @@ function CharacterStats(attrs) {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+  

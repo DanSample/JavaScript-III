@@ -11,11 +11,11 @@
 
 // Principle 1
 
-// function myName(name) {
-//     console.log(this)
-//     return name;
-// }
-// myName('Dan')
+function myName(name) {
+    console.log(this)
+    return name;
+}
+myName('Dan')
 
 // Principle 2
 
@@ -44,10 +44,15 @@ horse.info();
 
 // Principle 4
 
-const jessica = {name: 'Jessica', age:32};
+const sweetArr = ['candy', 'cookies', 'chocolate'];
 
-function speakInfo() {
-    console.log(`Hello my name ${this.name} and I am ${this.age} years old!`)
+const jessica = {
+    name: 'Jessica',
+    age: 32
+};
+
+function speakInfo(sweet1, sweet2, sweet3) {
+    console.log(`Hello my name ${this.name} and I am ${this.age} years old! I love sweets and my favorites are ${sweet1}, ${sweet2}, ${sweet3}.`)
 }
 
-speakInfo.call(jessica);
+speakInfo.call(jessica,...sweetArr);
